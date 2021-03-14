@@ -102,7 +102,10 @@ lane :githubrelease do
     File.rename(f, filename + File.extname(f))
     
   end
-  
+  Dir.glob(folder_path + "/*").sort.each do |f|
+    filename = File.basename(f, File.extname(f))
+    puts filename
+  end
   github_release = set_github_release(
     repository_name: "ModernChocolate/ynotes",
     api_token: ENV["GITHUB_TOKEN"],
