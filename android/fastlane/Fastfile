@@ -95,16 +95,18 @@ end
 lane :githubrelease do
   build_number = number_of_commits()
   version = flutter_version()["version_name"]
-  folder_path = "../build/app/outputs/flutter-apk"
+  folder_path = "../../build/app/outputs/flutter-apk"
+  
   Dir.glob(folder_path + "/*").sort.each do |f|
-    filename = File.basename(f, File.extname(f))
-    filename = filename + "_v#{version}+#{build_number}"
+    oldname = File.basename(f, File.extname(f))
+
+    filename = oldname + "_v#{version}+#{build_number}"
     filename.sub! 'app', 'yNotes'
-    File.rename(f, filename + File.extname(f))
-  end
-  Dir.glob(folder_path + "/*").sort.each do |f|
-    filename = File.basename(f, File.extname(f))
     puts filename
+    Dir.chdir folder_path do
+      sh("mv #{oldname}.apk #{filename}.apk")
+    end
+    
   end
   github_release = set_github_release(
     repository_name: "ModernChocolate/ynotes",
