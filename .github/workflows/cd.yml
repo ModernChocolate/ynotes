@@ -4,14 +4,14 @@ name: CD
 on:
   push:
     branches:
-      - beta-releases
+      - deploytests
 
 jobs:
   # CD
   deploy_android:
     runs-on: ubuntu-latest
     # Beta release only
-    if: github.ref == 'refs/heads/beta-releases'
+    if: github.ref == 'refs/heads/deploytests'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

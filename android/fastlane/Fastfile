@@ -36,7 +36,27 @@ platform :android do
     end
   end
 end
-
+platform :android_prod_promote do
+  desc "Promote to prod track"
+  lane :gh_actions_beta_release do
+    begin
+      gradle(task: "clean")
+      gradle(
+        task: "bundle",
+        build_type: 'Release'
+      )
+      upload_to_play_store(
+        track_to_promote: 'production',
+        aab: '../build/app/outputs/bundle/release/app-release.aab',
+        skip_upload_metadata: true,
+        skip_upload_images: true,
+        skip_upload_screenshots: true,
+        release_status: "draft",
+        version_code: flutter_version()["version_code"],
+      )
+    end
+  end
+end
 begin lane :beta do
   build_number = number_of_commits()
   version = flutter_version()["version_name"]
@@ -90,6 +110,7 @@ lane :githubrelease do
     tag_name: "v#{version}+#{build_number}",
     description: (File.read("metadata/android/fr-FR/last_changelog_github.txt") rescue "No changelog provided."),
     is_prerelease: true,
+    is_draft: true,
     upload_assets: ["../build/app/outputs/flutter-apk/yNotes-arm64-v8a-prod-release"+ "_v#{version}+#{build_number}.apk", "../build/app/outputs/flutter-apk/yNotes-armeabi-v7a-prod-release" + "_v#{version}+#{build_number}.apk", "../build/app/outputs/flutter-apk/yNotes-x86_64-prod-release"+ "_v#{version}+#{build_number}.apk"]
   )
 end
