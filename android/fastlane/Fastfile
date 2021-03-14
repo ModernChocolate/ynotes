@@ -58,6 +58,12 @@ platform :android_prod_promote do
   end
 end
 begin lane :beta do
+  gh = prompt(
+    text: "Do you want to push to github ?",
+    boolean: true)
+    if gh
+      githubrelease()
+    end
   build_number = number_of_commits()
   version = flutter_version()["version_name"]
   continue = prompt(
@@ -82,12 +88,7 @@ begin lane :beta do
         package_name: 'fr.ynotes',
         version_code: flutter_version()["version_code"],
       )  end
-  gh = prompt(
-  text: "Do you want to push to github ?",
-  boolean: true)
-  if gh
-    githubrelease()
-  end
+ 
 end
 
 
@@ -100,7 +101,6 @@ lane :githubrelease do
     filename = filename + "_v#{version}+#{build_number}"
     filename.sub! 'app', 'yNotes'
     File.rename(f, filename + File.extname(f))
-    
   end
   Dir.glob(folder_path + "/*").sort.each do |f|
     filename = File.basename(f, File.extname(f))
