@@ -86,6 +86,7 @@ begin lane :beta do
         track: 'beta',
         aab: '../build/app/outputs/bundle/prodRelease/app-prod-release.aab',
         package_name: 'fr.ynotes',
+        release_status: "draft",
         version_code: flutter_version()["version_code"],
       )  end
  
@@ -98,14 +99,16 @@ lane :githubrelease do
   folder_path = "../../build/app/outputs/flutter-apk"
   
   Dir.glob(folder_path + "/*").sort.each do |f|
-    oldname = File.basename(f, File.extname(f))
-
-    filename = oldname + "_v#{version}+#{build_number}"
-    filename.sub! 'app', 'yNotes'
-    puts filename
-    Dir.chdir folder_path do
-      sh("mv #{oldname}.apk #{filename}.apk")
-    end
+    begin  # "try" block
+      oldname = File.basename(f, File.extname(f))
+      filename = oldname + "_v#{version}+#{build_number}"
+      filename.sub! 'app', 'yNotes'
+      puts filename
+      Dir.chdir folder_path do
+      sh("mv #{oldname}.apk #{filename}.apk")  # won't be executed
+    rescue # optionally: `rescue Exception => ex`
+      puts 'Rename failed'
+    end 
     
   end
   github_release = set_github_release(
