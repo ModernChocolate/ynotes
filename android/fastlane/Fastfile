@@ -92,33 +92,36 @@ begin lane :beta do
  
 end
 
-
 lane :githubrelease do
-  build_number = number_of_commits()
-  version = flutter_version()["version_name"]
-  folder_path = "../../build/app/outputs/flutter-apk"
-  
-  Dir.glob(folder_path + "/*").sort.each do |f|
-    begin  # "try" block
-      oldname = File.basename(f, File.extname(f))
-      filename = oldname + "_v#{version}+#{build_number}"
-      filename.sub! 'app', 'yNotes'
-      puts filename
-      Dir.chdir folder_path do
-        sh("mv #{oldname}.apk #{filename}.apk")
+  begin
+      build_number = number_of_commits()
+      version = flutter_version()["version_name"]
+      folder_path = "../../build/app/outputs/flutter-apk"
+      Dir.glob(folder_path + "/*").sort.each do |f|
+        begin
+          # "try" block
+          oldname = File.basename(f, File.extname(f))
+          filename = oldname + "_v#{version}+#{build_number}"
+          filename.sub! 'app', 'yNotes'
+          puts filename
+          Dir.chdir folder_path do
+            sh("mv #{oldname}.apk #{filename}.apk")
+          end
+        rescue
+          next
+        end
       end
-    end 
+  ensure
+      github_release = set_github_release(
+      repository_name: "ModernChocolate/ynotes",
+      api_token: ENV["GITHUB_TOKEN"],
+      name: "yNotes #{version}+#{build_number}",
+      tag_name: "v#{version}+#{build_number}",
+      description: (File.read("metadata/android/fr-FR/last_changelog_github.txt") rescue "No changelog provided."),
+      is_prerelease: true,
+      is_draft: true,
+      upload_assets: ["../build/app/outputs/flutter-apk/yNotes-arm64-v8a-prod-release"+ "_v#{version}+#{build_number}.apk", "../build/app/outputs/flutter-apk/yNotes-armeabi-v7a-prod-release" + "_v#{version}+#{build_number}.apk", "../build/app/outputs/flutter-apk/yNotes-x86_64-prod-release"+ "_v#{version}+#{build_number}.apk"])
   end
-  github_release = set_github_release(
-    repository_name: "ModernChocolate/ynotes",
-    api_token: ENV["GITHUB_TOKEN"],
-    name: "yNotes #{version}+#{build_number}",
-    tag_name: "v#{version}+#{build_number}",
-    description: (File.read("metadata/android/fr-FR/last_changelog_github.txt") rescue "No changelog provided."),
-    is_prerelease: true,
-    is_draft: true,
-    upload_assets: ["../build/app/outputs/flutter-apk/yNotes-arm64-v8a-prod-release"+ "_v#{version}+#{build_number}.apk", "../build/app/outputs/flutter-apk/yNotes-armeabi-v7a-prod-release" + "_v#{version}+#{build_number}.apk", "../build/app/outputs/flutter-apk/yNotes-x86_64-prod-release"+ "_v#{version}+#{build_number}.apk"]
-  )
 end
 
 
