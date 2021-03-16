@@ -105,11 +105,9 @@ lane :githubrelease do
       filename.sub! 'app', 'yNotes'
       puts filename
       Dir.chdir folder_path do
-      sh("mv #{oldname}.apk #{filename}.apk")  # won't be executed
-    rescue # optionally: `rescue Exception => ex`
-      puts 'Rename failed'
+        sh("mv #{oldname}.apk #{filename}.apk")
+      end
     end 
-    
   end
   github_release = set_github_release(
     repository_name: "ModernChocolate/ynotes",
@@ -130,11 +128,11 @@ lane :local_test do
       sh("flutter","clean")
       sh("flutter", "build", "apk", "--flavor", "prod", "--release","--build-number=#{build_number}", "--split-per-abi")
   end
-    #Edit this part if you need to install another APK
-    Dir.chdir "../.." do
-      sh("adb", "install", "build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk")
+  #Edit this part if you need to install another APK
+  Dir.chdir "../.." do
+    sh("adb", "install", "build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk")
       sh("adb shell am start -n fr.ynotes/.MainActivity")
-    end 
+  end 
 
   rescue # if can't install ynotes
       Dir.chdir "../.." do
