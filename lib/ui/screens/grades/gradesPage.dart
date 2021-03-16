@@ -429,6 +429,7 @@ class _GradesPageState extends State<GradesPage> {
                                   ),
 
                                   //For now only enable simulator on debug mode
+                                  if (kDebugMode)
                                     Container(
                                       margin: EdgeInsets.only(left: (screenSize.size.height / 10 * 8.8) / 10 * 0.1),
                                       child: Material(

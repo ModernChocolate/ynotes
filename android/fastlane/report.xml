@@ -5,37 +5,47 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000582223">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.002541791">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: number_of_commits" time="0.009472097">
+      <testcase classname="fastlane.lanes" name="1: number_of_commits" time="0.009727884">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: flutter_version" time="0.001662807">
+      <testcase classname="fastlane.lanes" name="2: flutter_version" time="0.001623248">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: prompt" time="2.720952433">
+      <testcase classname="fastlane.lanes" name="3: prompt" time="28.419908782">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: prompt" time="1.201484873">
+      <testcase classname="fastlane.lanes" name="4: prompt" time="0.136523233">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: cat last_changelog.txt &gt; changelogs/399.txt" time="0.012284996">
+      <testcase classname="fastlane.lanes" name="5: cat last_changelog.txt &gt; changelogs/227.txt" time="0.010405206">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: flutter_version" time="0.01330359">
+      <testcase classname="fastlane.lanes" name="6: flutter packages get" time="2.149420894">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: flutter clean" time="1.013125752">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="8: flutter build appbundle --build-number\=227 --flavor prod" time="63.582896449">
         
       </testcase>
     
