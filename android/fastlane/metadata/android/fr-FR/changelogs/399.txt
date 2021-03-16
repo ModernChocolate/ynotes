@@ -1,1 +1,0 @@
-Correction d'un bug qui inversait la liste de notes.
