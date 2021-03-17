@@ -63,18 +63,10 @@ jobs:
           bundle config path vendor/bundle
           bundle install   
         working-directory: android/fastlane
-      - script@1:
-       title: Execute fastlane override values.
-       run_if: '{{getenv "FASTLANE_OVERRIDE_EXECUTED" | eq "" }}'
-       inputs:
-       - content: |
-           #!/usr/bin/env bash
-           set -e
-           echo "[INFO] Setting the faslane version to 2.152.0  "
-           gem install fastlane --version 2.152.0 --no-document
-           #set the flag so this step will no longer execute if called again in
-           # the same execution
-           envman add --key "FASTLANE_OVERRIDE_EXECUTED" --value "true"
+      - name: Downgrade fastlane
+        run: |
+          gem install fastlane --version 2.152.0 --no-document
+        working-directory: android/fastlane
       - name: Release to Google Play (beta)
         run: |
           bundle exec fastlane beta 
