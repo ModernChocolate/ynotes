@@ -24,42 +24,40 @@ jobs:
         env:
           ANDROID_KEYS_SECRET_PASSPHRASE: ${{ secrets.ANDROID_KEYS_SECRET_PASSPHRASE }}
       - name: Setup Java
+        if: ${{ !env.ACT }}
         uses: actions/setup-java@v1
         with:
             java-version: '12.x'
 
       - name: Setup Flutter
+        if: ${{ !env.ACT }}
         uses: subosito/flutter-action@v1
         with:
             flutter-version: '1.22.x'
-
-      - name: Cache pub dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.FLUTTER_HOME }}/.pub-cache
-          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: ${{ runner.os }}-pub-
-
       - name: Install Flutter dependencies
+        if: ${{ !env.ACT }}
         run: flutter pub get
       - name: Setup Ruby
+        if: ${{ !env.ACT }}
         uses: actions/setup-ruby@v1
         with:
           ruby-version: '2.6'
-
       - name: Cache bundle dependencies
+        if: ${{ !env.ACT }}
         uses: actions/cache@v2
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-gems-
       - name: Build Android App Bundle
+        if: ${{ !env.ACT }}
         run: flutter build appbundle --flavor prod --build-number=$(git rev-list HEAD --count)
       - name: Build Android apks
+        if: ${{ !env.ACT }}
         run: flutter build apk --split-per-abi --flavor prod --build-number=$(git rev-list HEAD --count)          
       - name: Download bundle dependencies
         run: |
-          gem install bundler:2.6.6
+          gem install bundler: 2.0.2
           bundle config path vendor/bundle
           bundle install   
         working-directory: android/fastlane
