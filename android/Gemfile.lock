@@ -189,7 +189,7 @@ GEM
     rake (13.0.1)
     representable (3.0.4)
       declarative (< 0.1.0)
-      declarative-option (< 0.2.0)
+      declarative-option (0.1.0)
       uber (< 0.2.0)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
