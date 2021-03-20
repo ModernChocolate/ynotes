@@ -1,1 +1,5 @@
-Fixes reversed grades list.
+Version 0.9.2 :
+* Introducing simulator: 
+    * Simulate fake grades to see their impact on your average
+* We will now automatically calculate the discipline averages
+* Bug fixes

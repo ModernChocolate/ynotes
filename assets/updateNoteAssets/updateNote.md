@@ -1,4 +1,12 @@
-## Note de mise à jour 0.9.1
+Dans cette version, nous introduisons un simulateur :
+- Ajoutez des notes virtuelles et visualisez leurs effets sur vos moyennes
+- Supprimez virtuellement les notes existantes et visualisez leurs effets sur vos moyennes
+Mais aussi :
+- Un calcul automatique des moyennes de matière 
+- Des correctifs de l'interface graphique et de l'ergonomie..
+- Et comme toujours, des correctifs de bugs
+
+## Note de mise à jour 0.9.2
 Après de si nombreux problèmes liés à la base de donnée, voici la version 0.9.1 :
 - Un écran d'accueil "amélioré"
   * Plus ergonomique et pratique d'utilisation, nous allons à l'essentiel pour vous permettre d'accéder à ce que vous cherchez rapidement

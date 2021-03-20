@@ -12,7 +12,7 @@ description: yNotes application de gestion de vie scolaire
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.
 
-version: 0.9.1+9
+version: 0.9.2+9
 
 environment:
   sdk: '>=2.10.0 <3.0.0'
