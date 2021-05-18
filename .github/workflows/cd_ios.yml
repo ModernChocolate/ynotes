@@ -4,14 +4,14 @@ name: CD
 on:
   push:
     branches:
-      - beta-releases
+      - test-deploys
 
 jobs:
   # CD
   deploy_ios:
     runs-on: macos-latest
     # Beta release only
-    if: github.ref == 'refs/heads/beta-releases'
+    if: github.ref == 'refs/heads/test-deploys'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
