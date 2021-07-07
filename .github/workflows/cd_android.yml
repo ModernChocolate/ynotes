@@ -56,9 +56,9 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-gems-
       - name: Build Android App Bundle
-        run: flutter build appbundle --flavor prod --build-number=$(git rev-list HEAD --count)
+        run: flutter build appbundle --tree-shake-icons --flavor prod --build-number=$(git rev-list HEAD --count)
       - name: Build Android apks
-        run: flutter build apk --split-per-abi --flavor prod --build-number=$(git rev-list HEAD --count)          
+        run: flutter build apk --tree-shake-icons --split-per-abi --flavor prod --build-number=$(git rev-list HEAD --count)          
       - name: Download bundle dependencies
         run: |
           gem install bundler:2.0.2
